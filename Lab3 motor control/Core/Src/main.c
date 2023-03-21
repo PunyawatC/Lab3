@@ -48,11 +48,12 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 uint32_t InputCaptureBuffer[IC_BUFFER_SIZE];
 float averageRisingedgePeriod;
-//uint32_t duty = 999;
+float MotorSetDutyRPM;
 float MotorSetDuty = 100;
-float MotorReadRPM;
+float MotorReadRPM = 0;
 float MotorSetRPM;
-float RPM;
+float PWM;
+float RPM_Count;
 int MotorControlEnable = 0;
 
 /* USER CODE END PV */
@@ -128,17 +129,29 @@ int main(void)
 		  MotorReadRPM = 60/(64*12*averageRisingedgePeriod*0.000001);
 		  if(MotorSetDuty > 100){MotorSetDuty = 100;}
 		  if(MotorSetDuty < 0){MotorSetDuty = 0;}
+
 		  switch(MotorControlEnable)
 		  {
 		  case 0:
 			  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
+			  PWM = MotorSetDuty;
 			  break;
 		  case 1:
-			  RPM = (MotorSetRPM*100)/26;
-			  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,RPM);
+
+			  if(MotorSetRPM >= MotorReadRPM)
+			  {
+				  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,PWM);
+				  PWM +=1.5;
+			  }
+			  if(MotorSetRPM <= MotorReadRPM)
+			  {
+				  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,PWM);
+				  PWM -=1.5;
+				  if(PWM < 0){PWM=0;}
+
+			  }
 			  break;
 		  }
-
 	  }
   }
   /* USER CODE END 3 */
