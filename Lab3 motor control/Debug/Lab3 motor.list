@@ -1101,7 +1101,7 @@ int main(void)
  8000d6e:	f503 73fa 	add.w	r3, r3, #500	; 0x1f4
  8000d72:	4a60      	ldr	r2, [pc, #384]	; (8000ef4 <main+0x1dc>)
  8000d74:	6013      	str	r3, [r2, #0]
-		  averageRisingedgePeriod = IC_Calc_Period();
+		  averageRisingedgePeriod = IC_Calc_Period();//Microsec
  8000d76:	f000 fb11 	bl	800139c <IC_Calc_Period>
  8000d7a:	eef0 7a40 	vmov.f32	s15, s0
  8000d7e:	4b5e      	ldr	r3, [pc, #376]	; (8000ef8 <main+0x1e0>)
@@ -1546,82 +1546,83 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
  80010b6:	2360      	movs	r3, #96	; 0x60
  80010b8:	627b      	str	r3, [r7, #36]	; 0x24
-  sConfigOC.Pulse = 500;
- 80010ba:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
- 80010be:	62bb      	str	r3, [r7, #40]	; 0x28
+  sConfigOC.Pulse = 100;
+ 80010ba:	2364      	movs	r3, #100	; 0x64
+ 80010bc:	62bb      	str	r3, [r7, #40]	; 0x28
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
- 80010c0:	2300      	movs	r3, #0
- 80010c2:	62fb      	str	r3, [r7, #44]	; 0x2c
+ 80010be:	2300      	movs	r3, #0
+ 80010c0:	62fb      	str	r3, [r7, #44]	; 0x2c
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
- 80010c4:	2300      	movs	r3, #0
- 80010c6:	633b      	str	r3, [r7, #48]	; 0x30
+ 80010c2:	2300      	movs	r3, #0
+ 80010c4:	633b      	str	r3, [r7, #48]	; 0x30
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
- 80010c8:	2300      	movs	r3, #0
- 80010ca:	637b      	str	r3, [r7, #52]	; 0x34
+ 80010c6:	2300      	movs	r3, #0
+ 80010c8:	637b      	str	r3, [r7, #52]	; 0x34
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
- 80010cc:	2300      	movs	r3, #0
- 80010ce:	63bb      	str	r3, [r7, #56]	; 0x38
+ 80010ca:	2300      	movs	r3, #0
+ 80010cc:	63bb      	str	r3, [r7, #56]	; 0x38
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
- 80010d0:	2300      	movs	r3, #0
- 80010d2:	63fb      	str	r3, [r7, #60]	; 0x3c
+ 80010ce:	2300      	movs	r3, #0
+ 80010d0:	63fb      	str	r3, [r7, #60]	; 0x3c
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
- 80010d4:	f107 0324 	add.w	r3, r7, #36	; 0x24
- 80010d8:	2200      	movs	r2, #0
- 80010da:	4619      	mov	r1, r3
- 80010dc:	4813      	ldr	r0, [pc, #76]	; (800112c <MX_TIM1_Init+0x138>)
- 80010de:	f002 faed 	bl	80036bc <HAL_TIM_PWM_ConfigChannel>
- 80010e2:	4603      	mov	r3, r0
- 80010e4:	2b00      	cmp	r3, #0
- 80010e6:	d001      	beq.n	80010ec <MX_TIM1_Init+0xf8>
+ 80010d2:	f107 0324 	add.w	r3, r7, #36	; 0x24
+ 80010d6:	2200      	movs	r2, #0
+ 80010d8:	4619      	mov	r1, r3
+ 80010da:	4814      	ldr	r0, [pc, #80]	; (800112c <MX_TIM1_Init+0x138>)
+ 80010dc:	f002 faee 	bl	80036bc <HAL_TIM_PWM_ConfigChannel>
+ 80010e0:	4603      	mov	r3, r0
+ 80010e2:	2b00      	cmp	r3, #0
+ 80010e4:	d001      	beq.n	80010ea <MX_TIM1_Init+0xf6>
   {
     Error_Handler();
- 80010e8:	f000 f9c8 	bl	800147c <Error_Handler>
+ 80010e6:	f000 f9c9 	bl	800147c <Error_Handler>
   }
   sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
- 80010ec:	2300      	movs	r3, #0
- 80010ee:	607b      	str	r3, [r7, #4]
+ 80010ea:	2300      	movs	r3, #0
+ 80010ec:	607b      	str	r3, [r7, #4]
   sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
- 80010f0:	2300      	movs	r3, #0
- 80010f2:	60bb      	str	r3, [r7, #8]
+ 80010ee:	2300      	movs	r3, #0
+ 80010f0:	60bb      	str	r3, [r7, #8]
   sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
- 80010f4:	2300      	movs	r3, #0
- 80010f6:	60fb      	str	r3, [r7, #12]
+ 80010f2:	2300      	movs	r3, #0
+ 80010f4:	60fb      	str	r3, [r7, #12]
   sBreakDeadTimeConfig.DeadTime = 0;
- 80010f8:	2300      	movs	r3, #0
- 80010fa:	613b      	str	r3, [r7, #16]
+ 80010f6:	2300      	movs	r3, #0
+ 80010f8:	613b      	str	r3, [r7, #16]
   sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
- 80010fc:	2300      	movs	r3, #0
- 80010fe:	617b      	str	r3, [r7, #20]
+ 80010fa:	2300      	movs	r3, #0
+ 80010fc:	617b      	str	r3, [r7, #20]
   sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
- 8001100:	f44f 5300 	mov.w	r3, #8192	; 0x2000
- 8001104:	61bb      	str	r3, [r7, #24]
+ 80010fe:	f44f 5300 	mov.w	r3, #8192	; 0x2000
+ 8001102:	61bb      	str	r3, [r7, #24]
   sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
- 8001106:	2300      	movs	r3, #0
- 8001108:	623b      	str	r3, [r7, #32]
+ 8001104:	2300      	movs	r3, #0
+ 8001106:	623b      	str	r3, [r7, #32]
   if (HAL_TIMEx_ConfigBreakDeadTime(&htim1, &sBreakDeadTimeConfig) != HAL_OK)
- 800110a:	1d3b      	adds	r3, r7, #4
- 800110c:	4619      	mov	r1, r3
- 800110e:	4807      	ldr	r0, [pc, #28]	; (800112c <MX_TIM1_Init+0x138>)
- 8001110:	f003 f9b4 	bl	800447c <HAL_TIMEx_ConfigBreakDeadTime>
- 8001114:	4603      	mov	r3, r0
- 8001116:	2b00      	cmp	r3, #0
- 8001118:	d001      	beq.n	800111e <MX_TIM1_Init+0x12a>
+ 8001108:	1d3b      	adds	r3, r7, #4
+ 800110a:	4619      	mov	r1, r3
+ 800110c:	4807      	ldr	r0, [pc, #28]	; (800112c <MX_TIM1_Init+0x138>)
+ 800110e:	f003 f9b5 	bl	800447c <HAL_TIMEx_ConfigBreakDeadTime>
+ 8001112:	4603      	mov	r3, r0
+ 8001114:	2b00      	cmp	r3, #0
+ 8001116:	d001      	beq.n	800111c <MX_TIM1_Init+0x128>
   {
     Error_Handler();
- 800111a:	f000 f9af 	bl	800147c <Error_Handler>
+ 8001118:	f000 f9b0 	bl	800147c <Error_Handler>
   }
   /* USER CODE BEGIN TIM1_Init 2 */
 
   /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
- 800111e:	4803      	ldr	r0, [pc, #12]	; (800112c <MX_TIM1_Init+0x138>)
- 8001120:	f000 fa6a 	bl	80015f8 <HAL_TIM_MspPostInit>
+ 800111c:	4803      	ldr	r0, [pc, #12]	; (800112c <MX_TIM1_Init+0x138>)
+ 800111e:	f000 fa6b 	bl	80015f8 <HAL_TIM_MspPostInit>
 
 }
- 8001124:	bf00      	nop
- 8001126:	3758      	adds	r7, #88	; 0x58
- 8001128:	46bd      	mov	sp, r7
- 800112a:	bd80      	pop	{r7, pc}
+ 8001122:	bf00      	nop
+ 8001124:	3758      	adds	r7, #88	; 0x58
+ 8001126:	46bd      	mov	sp, r7
+ 8001128:	bd80      	pop	{r7, pc}
+ 800112a:	bf00      	nop
  800112c:	2000002c 	.word	0x2000002c
  8001130:	40010000 	.word	0x40010000
 

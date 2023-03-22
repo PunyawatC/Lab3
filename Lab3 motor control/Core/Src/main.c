@@ -125,7 +125,7 @@ int main(void)
 	  if(HAL_GetTick()>timestamp)
 	  {
 		  timestamp = HAL_GetTick()+500;
-		  averageRisingedgePeriod = IC_Calc_Period();
+		  averageRisingedgePeriod = IC_Calc_Period();//Microsec
 		  MotorReadRPM = 60/(64*12*averageRisingedgePeriod*0.000001);
 		  if(MotorSetDuty > 100){MotorSetDuty = 100;}
 		  if(MotorSetDuty < 0){MotorSetDuty = 0;}
@@ -251,7 +251,7 @@ static void MX_TIM1_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 500;
+  sConfigOC.Pulse = 100;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
