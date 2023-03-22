@@ -142,6 +142,7 @@ int main(void)
 			  {
 				  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,PWM);
 				  PWM +=1.5;
+				  if(PWM > 100){PWM=100;}
 			  }
 			  if(MotorSetRPM <= MotorReadRPM)
 			  {
